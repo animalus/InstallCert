@@ -147,8 +147,8 @@ public class InstallCert {
         //     System.out.println("KeyStore not changed");
         //     return;
         // }
-        k = 1;
-        
+        k = 0;
+
         X509Certificate cert = chain[k];
         String alias = host + "-" + (k + 1);
         ks.setCertificateEntry(alias, cert);
