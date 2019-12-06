@@ -130,16 +130,25 @@ public class InstallCert {
             System.out.println();
         }
 
-        System.out.println("Enter certificate to add to trusted keystore or 'q' to quit: [1]");
-        String line = reader.readLine().trim();
+        //
+        // TODO: To run this as a background daemon I needed to not be asked anything.
+        // I'm going to default to just passing index 1 here. If native Java arg
+        // parsing wasn't so terrible (don't want to deal with adding 3rd-party stuff
+        // in this simple "script") I would make it so that you could pass --all
+        // which would default to all. My needs right now are to just add the one
+        // certificate that comes back from the one server I am using it on.
+        //
+        // System.out.println("Enter certificate to add to trusted keystore or 'q' to quit: [1]");
+        // String line = reader.readLine().trim();
         int k;
-        try {
-            k = (line.length() == 0) ? 0 : Integer.parseInt(line) - 1;
-        } catch (NumberFormatException e) {
-            System.out.println("KeyStore not changed");
-            return;
-        }
-
+        // try {
+        //     k = (line.length() == 0) ? 0 : Integer.parseInt(line) - 1;
+        // } catch (NumberFormatException e) {
+        //     System.out.println("KeyStore not changed");
+        //     return;
+        // }
+        k = 1;
+        
         X509Certificate cert = chain[k];
         String alias = host + "-" + (k + 1);
         ks.setCertificateEntry(alias, cert);
@@ -179,13 +188,13 @@ public class InstallCert {
         }
 
         public X509Certificate[] getAcceptedIssuers() {
-	   
-	    /** 
+
+	    /**
 	     * This change has been done due to the following resolution advised for Java 1.7+
 		http://infposs.blogspot.kr/2013/06/installcert-and-java-7.html
-       	     **/ 
-	    
-	    return new X509Certificate[0];	
+       	     **/
+
+	    return new X509Certificate[0];
             //throw new UnsupportedOperationException();
         }
 
